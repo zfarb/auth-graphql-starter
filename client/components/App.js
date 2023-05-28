@@ -6,7 +6,7 @@ import query from '../queries/currentUser';
 function App(props) {
     return (
         <div>
-            <Header />
+            <Header loading={props.loading} user={props.user} />
             {props.children}
         </div>
     );
