@@ -21,6 +21,7 @@ passport.deserializeUser((id, done) => {
             return done(err);
         });
 });
+
 // Instructs Passport how to authenticate a user using a locally saved email
 // and password combination.  This strategy is called whenever a user attempts to
 // log in.  We first find the user model in MongoDB that matches the submitted email,
