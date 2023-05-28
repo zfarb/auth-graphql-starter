@@ -1,5 +1,7 @@
 import React from 'react';
 import Header from './Header';
+import { graphql } from 'react-apollo';
+import query from '../queries/currentUser';
 
 function App(props) {
     return (
@@ -10,4 +12,4 @@ function App(props) {
     );
 }
 
-export default App;
+export default graphql(query)(App);
