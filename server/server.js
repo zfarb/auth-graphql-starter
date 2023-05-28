@@ -5,15 +5,15 @@ const mongoose = require('mongoose');
 const session = require('express-session');
 const passport = require('passport');
 const passportConfig = require('./services/auth');
-const MongoStore = require('connect-mongo')(session);
+const MongoStore = require('connect-mongo');
 const schema = require('./schema/schema');
-const keys = require('../keys');
+const config = require('../keys');
 
 // Create a new Express application
 const app = express();
 
 // Replace with your mongoLab URI
-const MONGO_URI = keys.MONGO_URI;
+const MONGO_URI = config.MONGO_URI;
 
 // Mongoose's built in promise library is deprecated, replace it with ES2015 Promise
 mongoose.Promise = global.Promise;
@@ -22,9 +22,9 @@ mongoose.Promise = global.Promise;
 // on success or failure
 mongoose.connect(MONGO_URI);
 mongoose.connection
-    .once('open', () => console.log('Connected to MongoLab instance.'))
+    .once('open', () => console.log('Connected to MongoDB Atlas.'))
     .on('error', (error) =>
-        console.log('Error connecting to MongoLab:', error)
+        console.log('Error connecting to MongoDB Atlas:', error)
     );
 
 // Configures express to use sessions.  This places an encrypted identifier
@@ -37,9 +37,8 @@ app.use(
         resave: true,
         saveUninitialized: true,
         secret: 'aaabbbccc',
-        store: new MongoStore({
-            url: MONGO_URI,
-            autoReconnect: true
+        store: MongoStore.create({
+            mongoUrl: MONGO_URI
         })
     })
 );
