@@ -13,11 +13,14 @@ passport.serializeUser((user, done) => {
 // The counterpart of 'serializeUser'.  Given only a user's ID, we must return
 // the user object.  This object is placed on 'req.user'.
 passport.deserializeUser((id, done) => {
-    User.findById(id, (err, user) => {
-        done(err, user);
-    });
+    User.findById(id)
+        .then((user) => {
+            return done(null, user);
+        })
+        .catch((err) => {
+            return done(err);
+        });
 });
-
 // Instructs Passport how to authenticate a user using a locally saved email
 // and password combination.  This strategy is called whenever a user attempts to
 // log in.  We first find the user model in MongoDB that matches the submitted email,
