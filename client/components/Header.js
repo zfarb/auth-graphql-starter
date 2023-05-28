@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router';
 
 class Header extends Component {
     constructor(props) {
@@ -17,14 +18,28 @@ class Header extends Component {
         if (user) {
             return <div>Logout</div>;
         } else {
-            return <div>Login or Sign Up</div>;
+            return (
+                <div>
+                    <li>
+                        <Link to="/login">Login</Link>
+                    </li>
+                    <li>
+                        <Link to="/signup">Signup</Link>
+                    </li>
+                </div>
+            );
         }
     }
 
     render() {
         return (
             <nav>
-                <div className="nav-wrapper">{this.renderButtons()}</div>
+                <div className="nav-wrapper">
+                    <Link to="/" className="brand-logo left">
+                        Home
+                    </Link>
+                    <ul className="right">{this.renderButtons()}</ul>
+                </div>
             </nav>
         );
     }
